@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full bg-slate-900 text-slate-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ENGLISH TIME — Eng Sara Ustozlar & AI Robotli O'yinlar Platformasi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-950 text-slate-100">
+
+  <!-- TOP FAST ACCOUNT SWITCHER BAR (BEVOSITA 1-BOSISH BILAN HISOBNI ALMASHTIRISH) -->
+  <div class="bg-slate-900 border-b border-slate-800 text-xs py-2 px-4 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-400 font-bold flex items-center gap-1">⚡ Hisob:</span>
+        <div id="quick-user-info" class="font-semibold text-slate-200">Yuklanmoqda...</div>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap justify-center">
+        <button onclick="db.switchUser('komilrazmatov@gmail.com')" id="btn-switch-komil" class="px-3 py-1 rounded-full text-[11px] font-black bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm hover:opacity-90 transition-all flex items-center gap-1">
+          👑 Komil Razmatov (Cheksiz Bepul 160k PRO)
+        </button>
+        <button onclick="db.switchUser('farxodovfazliddin19@gmail.com')" id="btn-switch-fazliddin" class="px-3 py-1 rounded-full text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-sm transition-all flex items-center gap-1">
+          📘 Fazliddin Farxodov (ODDIY - 100k)
+        </button>
+        <button onclick="db.switchUser('mehmon@test.uz')" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all">
+          👤 Mehmon
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('courses')">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+          <span class="text-2xl">⏱️</span>
+        </div>
+        <div>
+          <div class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
+            ENGLISH <span class="text-indigo-400">TIME</span>
+          </div>
+          <p class="text-[10px] font-bold text-indigo-300 tracking-wider uppercase">Eng Sara Ustozlar & AI Robot Platformasi</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-800/80 p-1.5 rounded-2xl border border-slate-700">
+        <button onclick="switchView('courses')" data-view-btn="courses" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md">
+          🎓 Kurslar (A1-C2)
+        </button>
+        <button onclick="switchView('games')" data-view-btn="games" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-300 hover:bg-slate-700">
+          🤖 10 ta AI Robot O'yini
+        </button>
+        <button onclick="switchView('pricing')" data-view-btn="pricing" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-300 hover:bg-slate-700">
+          💎 Tariflar (100k & 160k)
+        </button>
+        <button id="nav-admin-btn" onclick="switchView('admin')" data-view-btn="admin" class="px-4 py-2 rounded-xl text-xs font-black transition-all bg-amber-500/20 text-amber-400 hover:bg-amber-500 hover:text-white border border-amber-500/40">
+          👑 Admin Panel
+        </button>
+      </nav>
+
+      <!-- User Status & Profile Button -->
+      <div class="flex items-center gap-3">
+        <div class="cursor-pointer text-right hidden sm:block" onclick="switchView('profile')">
+          <div id="header-user-badge"></div>
+          <div id="header-user-plan" class="text-[11px] text-slate-400 font-medium"></div>
+        </div>
+
+        <button onclick="switchView('profile')" class="p-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all text-xs font-bold flex items-center gap-2 border border-slate-700" title="Profil va hisob sozlamalari">
+          <span>👤 Profil</span>
+        </button>
+      </div>
+
+    </div>
+    
+    <!-- Mobile Nav -->
+    <div class="md:hidden flex items-center justify-around border-t border-slate-800 p-2 bg-slate-900 text-xs font-bold">
+      <button onclick="switchView('courses')" class="px-3 py-1.5 rounded-lg text-indigo-400">🎓 Kurslar</button>
+      <button onclick="switchView('games')" class="px-3 py-1.5 rounded-lg text-slate-300">🤖 O'yinlar</button>
+      <button onclick="switchView('pricing')" class="px-3 py-1.5 rounded-lg text-slate-300">💎 Tariflar</button>
+      <button onclick="switchView('admin')" class="px-3 py-1.5 rounded-lg text-amber-400">👑 Admin</button>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8" id="main-content">
+    <!-- View rendered by JavaScript -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 border-t border-slate-800 py-8 mt-12 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-bold text-slate-300">ENGLISH TIME &copy; 2026. Barcha huquqlar himoyalangan.</p>
+      <p>Loyiha egasi: <strong class="text-indigo-400">Komil Razmatov (komilrazmatov@gmail.com)</strong> — Barcha darslar va o'yinlar doimiy tekin va ochiq.</p>
+      <p class="text-[11px] text-slate-500">ODDIY (100,000 UZS) • PRO PLAN (160,000 UZS) • Eng sara ustozlar video darsliklari va AI Robot bellashuvlari</p>
+    </div>
+  </footer>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-md pointer-events-auto"></div>
+
+  <!-- PAYMENT MODAL CONTAINER -->
+  <div id="payment-modal"></div>
+
+  <!-- SINGLE-FILE INLINE ENGINE (DATABASE + LOGIC + UI + 10 AI ROBOT GAMES + VIDEO MASTERCLASSES) -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. DATABASE & PERMISSIONS ENGINE
+     * =========================================================================
+     */
+    const OWNER_EMAIL = 'komilrazmatov@gmail.com';
+    const FAZLIDDIN_EMAIL = 'farxodovfazliddin19@gmail.com';
+
+    const DEFAULT_PLANS = {
+      oddiy: {
+        id: 'oddiy',
+        name: 'ODDIY',
+        price: 100000,
+        priceFormatted: '100,000 UZS',
+        period: '/ oy',
+        badge: 'Hamyonbop',
+        description: 'Boshlang\'ich va o\'rta darajadagi o\'rganuvchilar uchun mukammal to\'plam',
+        courses: ['A1', 'A2', 'B1', 'B2', 'C1'],
+        lockedCourses: ['C2'],
+        gamesCount: 4
+      },
+      pro: {
+        id: 'pro',
+        name: 'PRO PLAN',
+        price: 160000,
+        priceFormatted: '160,000 UZS',
+        period: '/ oy',
+        badge: 'Eng Ommabop & Cheksiz',
+        isPopular: true,
+        description: 'Ingliz tilini mukammal o\'rganish, barcha darslar va cheksiz 10 ta o\'yin',
+        courses: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+        lockedCourses: [],
+        gamesCount: 10
+      }
+    };
+
+    // Pre-configured Verified Users
+    const INITIAL_USERS = [
+      {
+        id: 'u_owner',
+        email: OWNER_EMAIL,
+        name: 'Komil Razmatov',
+        role: 'owner',
+        plan: 'pro', // 160,000 UZS PRO PLAN - 100% FREE AND UNLIMITED!
+        planName: 'Platforma Egasi (VIP Unlimited 160k PRO - Bepul)',
+        subscriptionStatus: 'approved',
+        unlimitedAccess: true,
+        isOwner: true
+      },
+      {
+        id: 'u_fazliddin',
+        email: FAZLIDDIN_EMAIL,
+        name: 'Fazliddin Farxodov',
+        role: 'student',
+        plan: 'oddiy', // 100,000 UZS ODDIY PLAN FAOL: A1-C1 ochiq, 4 ta o'yin ochiq
+        planName: 'ODDIY PLAN (100,000 UZS Faollashtirilgan)',
+        subscriptionStatus: 'approved',
+        unlimitedAccess: false,
+        isOwner: false
+      },
+      {
+        id: 'u_guest',
+        email: 'mehmon@test.uz',
+        name: 'Mehmon Foydalanuvchi',
+        role: 'student',
+        plan: 'free',
+        planName: 'Bepul Boshlang\'ich',
+        subscriptionStatus: 'none',
+        unlimitedAccess: false,
+        isOwner: false
+      }
+    ];
+
+    // Masterclass Video Courses from Top English Teachers
+    const MASTERCLASS_COURSES = [
+      {
+        code: 'A1',
+        title: 'Beginner (Boshlang\'ich)',
+        instructor: 'Teacher Lucy & Oxford English Masterclass',
+        description: 'Alifbo, tanishuv, kundalik oddiy iboralar va asosiy grammatik strukturalar.',
+        videoUrl: 'https://www.youtube.com/embed/juKd26qkNAw',
+        lessonsCount: 12,
+        duration: '24 soat',
+        grammarTitle: 'To Be (Am / Is / Are) va Oddiy gap tuzish',
+        grammarText: 'Subject + To Be + Complement. Masalan: I am a student. He is a doctor. They are ready.',
+        teacherNotes: 'Ustoz tavsiyasi: Har kuni 10 tadan yangi so\'zni baland ovoz bilan takrorlang. Dastlabki 2 haftada "To Be" fe\'lini turli gaplarda erkin qo\'llashni o\'rganing.',
+        vocabulary: [
+          { en: 'Welcome', uz: 'Xush kelibsiz' },
+          { en: 'Opportunity', uz: 'Imkoniyat' },
+          { en: 'Practice', uz: 'Mashq qilmoq' },
+          { en: 'Fluent', uz: 'Erkin so\'zlashuvchi' }
+        ],
+        quiz: {
+          q: 'Which sentence is grammatically correct for A1?',
+          opts: ['I are a learner', 'I am a learner', 'I is a learner', 'I be a learner'],
+          ans: 1,
+          exp: '"I" olmoshi bilan doimo "am" fe\'li qo\'llaniladi.'
+        }
+      },
+      {
+        code: 'A2',
+        title: 'Elementary (Baza)',
+        instructor: 'BBC Learning English Masters',
+        description: 'O\'tgan zamon (Past Simple), kelasi zamon rejalari, xarid va sayohat.',
+        videoUrl: 'https://www.youtube.com/embed/016E6Zz_5V4',
+        lessonsCount: 14,
+        duration: '28 soat',
+        grammarTitle: 'Past Simple & Irregular Verbs (O\'tgan zamon)',
+        grammarText: 'Regular: verb + -ed (watched, worked). Irregular: 2-shakl (go -> went, see -> saw, buy -> bought).',
+        teacherNotes: 'Ustoz tavsiyasi: Noto\'g\'ri fe\'llar (Irregular verbs)ni kuniga 5 tadan yod oling va o\'tgan kungi kuningiz haqida 3 ta gap yozing.',
+        vocabulary: [
+          { en: 'Yesterday', uz: 'Kecha' },
+          { en: 'Decide', uz: 'Qaror qilmoq' },
+          { en: 'Experience', uz: 'Tajriba' },
+          { en: 'Journey', uz: 'Sayohat' }
+        ],
+        quiz: {
+          q: 'Yesterday, Jasur ___ a brand new car.',
+          opts: ['buy', 'buys', 'bought', 'buying'],
+          ans: 2,
+          exp: '"Buy" fe\'lining o\'tgan zamon (V2) shakli — "bought".'
+        }
+      },
+      {
+        code: 'B1',
+        title: 'Intermediate (O\'rta)',
+        instructor: 'Cambridge Assessment English Experts',
+        description: 'Present Perfect, modal fe\'llar, majhul nisbat (Passive) va erkin suhbat.',
+        videoUrl: 'https://www.youtube.com/embed/6AU_Tz3_s40',
+        lessonsCount: 16,
+        duration: '32 soat',
+        grammarTitle: 'Present Perfect vs Past Simple',
+        grammarText: 'Have/Has + Past Participle (V3). Natija hozirgi vaqt bilan bog\'liq bo\'lganda ishlatiladi: I have finished my task.',
+        teacherNotes: 'Ustoz tavsiyasi: O\'z tajribangiz haqida gapirganda "Have you ever...?" savol-javoblaridan faol foydalaning.',
+        vocabulary: [
+          { en: 'Accomplish', uz: 'Muvaffaqiyatli bajarmoq' },
+          { en: 'Recently', uz: 'Yaqinda' },
+          { en: 'Challenge', uz: 'Qiyinchilik / Chaqiruv' },
+          { en: 'Improve', uz: 'Rivojlantirmoq' }
+        ],
+        quiz: {
+          q: 'Have you ever ___ to London?',
+          opts: ['be', 'was', 'been', 'being'],
+          ans: 2,
+          exp: 'Present Perfect savolida V3 sifatida "been" qo\'llaniladi.'
+        }
+      },
+      {
+        code: 'B2',
+        title: 'Upper-Intermediate (Yuqori O\'rta)',
+        instructor: 'Oxford Online English Specialists',
+        description: 'Conditionals (Shart mayllari), murakkab grammatika, iboralar va biznes ingliz tili.',
+        videoUrl: 'https://www.youtube.com/embed/qO4FUGW_i3E',
+        lessonsCount: 18,
+        duration: '36 soat',
+        grammarTitle: 'Conditionals (2nd & 3rd Mixed Forms)',
+        grammarText: 'If + Past Perfect, would have + V3. Masalan: If I had studied harder, I would have passed.',
+        teacherNotes: 'Ustoz tavsiyasi: Shart ergash gaplar orqali real va xayoliy vaziyatlarni farqlash nutqingizni professional darajaga olib chiqadi.',
+        vocabulary: [
+          { en: 'Hypothetical', uz: 'Faraziy' },
+          { en: 'Significant', uz: 'Ahamiyatli' },
+          { en: 'Persuade', uz: 'Ishontirmoq' },
+          { en: 'Consequence', uz: 'Oqibat' }
+        ],
+        quiz: {
+          q: 'If we ___ earlier, we wouldn\'t have missed the flight.',
+          opts: ['leave', 'left', 'had left', 'have left'],
+          ans: 2,
+          exp: '3rd Conditional if-qismida "had left" (Past Perfect) bo\'ladi.'
+        }
+      },
+      {
+        code: 'C1',
+        title: 'Advanced (Ilg\'or)',
+        instructor: 'Dr. John & Academic English Masters',
+        description: 'Akademik leksika, inversiya, murakkab insholar. ODDIY va PRO foydalanuvchilariga OCHILGAN!',
+        videoUrl: 'https://www.youtube.com/embed/3q8Z31p83gI',
+        lessonsCount: 20,
+        duration: '40 soat',
+        grammarTitle: 'Inversion for Emphasis & C1 Academic Structures',
+        grammarText: 'Rarely have I seen... / Under no circumstances should you... / Not only did they win, but they also set a record.',
+        teacherNotes: 'Ustoz tavsiyasi: C1 darajasida inversiya nutqingizga ritorik jilo va yuqori akademik salmoq bag\'ishlaydi. ODDIY va PRO tarifi uchun bu kurs to\'liq ochiq!',
+        vocabulary: [
+          { en: 'Profound', uz: 'Chuqur / Tub' },
+          { en: 'Ubiquitous', uz: 'Hamma yerda hozir' },
+          { en: 'Scrutiny', uz: 'Sinchiklab tekshiruv' },
+          { en: 'Elucidate', uz: 'Oydinlik kiritmoq' }
+        ],
+        quiz: {
+          q: 'Rarely ___ such extraordinary passion in students.',
+          opts: ['we see', 'have we seen', 'we have seen', 'did we saw'],
+          ans: 1,
+          exp: '"Rarely" gap boshida kelsa yordamchi fe\'l egadan oldinga o\'tadi (Inversion).'
+        }
+      },
+      {
+        code: 'C2',
+        title: 'Proficiency (Mahorat)',
+        instructor: 'Native English Linguists & IELTS 9.0 Examiners',
+        description: 'Ingliz tilini ona tili (Native) darajasida egallash. ODDIY DA QULFLANGAN — FAQAT PRO DA OCHIQ!',
+        videoUrl: 'https://www.youtube.com/embed/D3e8eG1jF2o',
+        lessonsCount: 24,
+        duration: '48 soat',
+        grammarTitle: 'Native Idiomatic Mastery & Subjunctive Nuances',
+        grammarText: 'The board demanded that he resign immediately. / Were it not for your perseverance...',
+        teacherNotes: 'Ustoz tavsiyasi: C2 darajasi adabiy va rasmiy nutqning cho\'qqisi hisoblanadi. Ushbu kurs faqat PRO PLAN foydalanuvchilari uchun ochiq.',
+        vocabulary: [
+          { en: 'Ephemeral', uz: 'Bir lahzalik / O\'tkinchi' },
+          { en: 'Serendipity', uz: 'Baxtli tasodif' },
+          { en: 'Esoteric', uz: 'Maxfiy / Kamchillikka ma\'lum' },
+          { en: 'Quintessential', uz: 'Haqiqiy namunali' }
+        ],
+        quiz: {
+          q: 'The president demanded that all documents ___ submitted without delay.',
+          opts: ['are', 'be', 'were', 'will be'],
+          ans: 1,
+          exp: 'Subjunctive qoidasiga ko\'ra fe\'l asosiy shaklda ("be") turadi.'
+        }
+      }
+    ];
+
+    // 10 Games with AI Robot Integration
+    const GAMES_CATALOG = [
+      { id: 1, title: 'Word Match (Lug\'at juftlash)', category: 'Vocabulary', robotOpponent: '🤖 Robo-Lex v1.0', unlockedInOddiy: true },
+      { id: 2, title: 'Grammar Blitz (Grammatika poygasi)', category: 'Grammar', robotOpponent: '⚡ Cyber-Grammar Bot', unlockedInOddiy: true },
+      { id: 3, title: 'Speed Spelling (Tezkor Imlo)', category: 'Spelling', robotOpponent: '🔤 Spello-Bot', unlockedInOddiy: true },
+      { id: 4, title: 'Sentence Builder (Gap tuzuvchi)', category: 'Syntax', robotOpponent: '🧠 Syntax-AI', unlockedInOddiy: true },
+      // 5-10 LOCKED ON ODDIY, UNLOCKED ON PRO
+      { id: 5, title: 'Irregular Verbs Hunt (Noto\'g\'ri Fe\'llar)', category: 'Mastery', robotOpponent: '🤖 Verb-Hunter AI', unlockedInOddiy: false },
+      { id: 6, title: 'Pronunciation Master (Talaffuz ustasi)', category: 'Speaking', robotOpponent: '🎙️ Phonetic-AI Voice', unlockedInOddiy: false },
+      { id: 7, title: 'Idioms & Phrasal Verbs (Ibora va Frazalar)', category: 'Lexis', robotOpponent: '🎭 Idiom-Master AI', unlockedInOddiy: false },
+      { id: 8, title: 'Listening Challenge (Audio eshitish testi)', category: 'Listening', robotOpponent: '🎧 Sonic-Ear AI', unlockedInOddiy: false },
+      { id: 9, title: 'English Crossword (Krossvord jumboq)', category: 'Puzzle', robotOpponent: '🧩 Cross-Bot 3000', unlockedInOddiy: false },
+      { id: 10, title: 'IELTS Speaking Battle (Speaking Simulyatori)', category: 'Exam', robotOpponent: '👑 IELTS Examiner AI (Band 9.0)', unlockedInOddiy: false }
+    ];
+
+    class SingleEngine {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        if (!localStorage.getItem('et_users')) {
+          localStorage.setItem('et_users', JSON.stringify(INITIAL_USERS));
+        }
+
+        // DEFAULT TO OWNER (KOMIL RAZMATOV) IF NOT SET OR GUEST
+        const current = this.getCurrentUser();
+        if (!current || current.email === 'mehmon@test.uz') {
+          this.switchUser(OWNER_EMAIL);
+        }
+      }
+
+      getUsers() {
+        return JSON.parse(localStorage.getItem('et_users')) || INITIAL_USERS;
+      }
+
+      getCurrentUser() {
+        const email = localStorage.getItem('et_active_email') || OWNER_EMAIL;
+        const users = this.getUsers();
+        let u = users.find(x => x.email.toLowerCase() === email.toLowerCase());
+        
+        if (!u) {
+          if (email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+            u = INITIAL_USERS[0];
+          } else if (email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase()) {
+            u = INITIAL_USERS[1];
+          } else {
+            u = {
+              id: 'u_' + Date.now(),
+              email: email,
+              name: email.split('@')[0],
+              role: 'student',
+              plan: 'free',
+              planName: 'Bepul Boshlang\'ich',
+              subscriptionStatus: 'none',
+              unlimitedAccess: false,
+              isOwner: false
+            };
+          }
+        }
+
+        // GUARANTEE OWNER UNLIMITED ACCESS
+        if (u.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+          u.role = 'owner';
+          u.plan = 'pro';
+          u.planName = 'Platforma Egasi (VIP 160k PRO - Cheksiz Bepul)';
+          u.subscriptionStatus = 'approved';
+          u.unlimitedAccess = true;
+          u.isOwner = true;
+        }
+
+        // GUARANTEE FAZLIDDIN ODDIY (100k) FAOL
+        if (u.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase()) {
+          u.plan = 'oddiy';
+          u.planName = 'ODDIY PLAN (100,000 UZS Faollashtirilgan)';
+          u.subscriptionStatus = 'approved';
+          u.unlimitedAccess = false;
+          u.isOwner = false;
+        }
+
+        return u;
+      }
+
+      switchUser(email) {
+        localStorage.setItem('et_active_email', email);
+        const u = this.getCurrentUser();
+        showToast(`Hisob almashtirildi: ${u.name} (${u.email})`, 'success');
+        updateHeaderUser();
+        switchView(state.currentView);
+      }
+
+      isOwner(email) {
+        if (!email) email = this.getCurrentUser().email;
+        return email && email.toLowerCase() === OWNER_EMAIL.toLowerCase();
+      }
+
+      /**
+       * COURSE ACCESS RULES:
+       * 1. komilrazmatov@gmail.com: 100% TEPA-TEKIN VA BARCHA DARSLAR (A1-C2) TO'LIQ OCHIQ!
+       * 2. farxodovfazliddin19@gmail.com (ODDIY 100k): A1, A2, B1, B2 va C1 OCHIQ! C2 QULFLANGAN.
+       * 3. Pro user: Barcha A1-C2 ochiq.
+       * 4. Boshqalar: A1 namuna.
+       */
+      canAccessCourse(code, user = null) {
+        if (!user) user = this.getCurrentUser();
+        
+        // 1. KOMIL RAZMATOV: ALWAYS UNLOCKED!
+        if (user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+          return true;
+        }
+
+        // 2. FAZLIDDIN FARXODOV: ODDIY PLAN (A1-C1 OCHIQ, C2 QULF)
+        if (user.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase()) {
+          if (code === 'C2') return false; // C2 locked for Oddiy
+          return ['A1', 'A2', 'B1', 'B2', 'C1'].includes(code); // C1 unlocked!
+        }
+
+        // General rules
+        if (user.plan === 'pro' && user.subscriptionStatus === 'approved') return true;
+        if (user.plan === 'oddiy' && user.subscriptionStatus === 'approved') {
+          if (code === 'C2') return false;
+          return ['A1', 'A2', 'B1', 'B2', 'C1'].includes(code);
+        }
+
+        return code === 'A1';
+      }
+
+      /**
+       * GAME ACCESS RULES:
+       * 1. komilrazmatov@gmail.com: 10 TA O'YIN HAMMASI OCHIQ!
+       * 2. farxodovfazliddin19@gmail.com (ODDIY): 4 TA O'YIN (1-4) OCHIQ!
+       * 3. Pro user: Barcha 10 ta o'yin ochiq.
+       */
+      canAccessGame(gameId, user = null) {
+        if (!user) user = this.getCurrentUser();
+
+        // 1. KOMIL RAZMATOV: ALL 10 GAMES UNLOCKED!
+        if (user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+          return true;
+        }
+
+        // 2. FAZLIDDIN FARXODOV: 4 GAMES UNLOCKED!
+        if (user.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase()) {
+          return Number(gameId) <= 4;
+        }
+
+        if (user.plan === 'pro' && user.subscriptionStatus === 'approved') return true;
+        if (user.plan === 'oddiy' && user.subscriptionStatus === 'approved') {
+          return Number(gameId) <= 4;
+        }
+
+        return gameId === 1;
+      }
+    }
+
+    const db = new SingleEngine();
+
+    /**
+     * =========================================================================
+     * 2. UI CONTROLLER & ROUTING
+     * =========================================================================
+     */
+    const state = {
+      currentView: 'courses',
+      selectedCourseLevel: 'A1',
+      selectedGameId: 1,
+      gameScore: 0,
+      robotScore: 0,
+      robotTimer: null
+    };
+
+    function speakEnglish(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'en-US';
+        utt.rate = 0.9;
+        window.speechSynthesis.speak(utt);
+      }
+    }
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      const colors = {
+        info: 'bg-blue-600 text-white',
+        success: 'bg-emerald-600 text-white',
+        warning: 'bg-amber-600 text-white',
+        error: 'bg-rose-600 text-white'
+      };
+      toast.className = `px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all transform duration-300 translate-y-2 opacity-0 text-xs sm:text-sm font-bold ${colors[type] || colors.info}`;
+      toast.innerHTML = `<span>${msg}</span><button class="ml-2 hover:opacity-75" onclick="this.parentElement.remove()">✕</button>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function updateHeaderUser() {
+      const u = db.getCurrentUser();
+      const badge = document.getElementById('header-user-badge');
+      const planText = document.getElementById('header-user-plan');
+      const infoText = document.getElementById('quick-user-info');
+
+      if (infoText) {
+        infoText.innerHTML = `<span class="text-white">${u.name}</span> <span class="text-xs text-slate-400">(${u.email})</span> — <span class="text-emerald-400 font-bold">${u.planName}</span>`;
+      }
+
+      if (badge && planText) {
+        if (db.isOwner(u.email)) {
+          badge.innerHTML = `<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm animate-pulse">👑 EGASI (160k PRO - CHEKSIZ BEPUL)</span>`;
+          planText.textContent = 'Komil Razmatov (Barcha dars & 10 ta o\'yin ochiq)';
+        } else if (u.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase()) {
+          badge.innerHTML = `<span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">📘 ODDIY PLAN (100,000 UZS)</span>`;
+          planText.textContent = 'Fazliddin Farxodov (A1-C1 ochiq, 4 ta o\'yin ochiq)';
+        } else {
+          badge.innerHTML = `<span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">👤 Mehmon</span>`;
+          planText.textContent = u.name;
+        }
+      }
+    }
+
+    function switchView(viewName) {
+      state.currentView = viewName;
+      document.querySelectorAll('[data-view-btn]').forEach(btn => {
+        if (btn.dataset.viewBtn === viewName) {
+          btn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+          btn.classList.remove('text-slate-300', 'hover:bg-slate-700');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+          btn.classList.add('text-slate-300', 'hover:bg-slate-700');
+        }
+      });
+
+      const main = document.getElementById('main-content');
+      if (!main) return;
+
+      switch (viewName) {
+        case 'courses': renderCoursesView(main); break;
+        case 'games': renderGamesView(main); break;
+        case 'pricing': renderPricingView(main); break;
+        case 'admin': renderAdminView(main); break;
+        case 'profile': renderProfileView(main); break;
+        default: renderCoursesView(main);                  
+
+      updateHeaderUser();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * =========================================================================
+     * 3. COURSES & MASTERCLASS VIDEO LECTURES (A1 - C2)
+     * =========================================================================
+     */
+    function renderCoursesView(container) {
+      const user = db.getCurrentUser();
+      const currentCourse = MASTERCLASS_COURSES.find(c => c.code === state.selectedCourseLevel) || MASTERCLASS_COURSES[0];
+      const isAccessible = db.canAccessCourse(currentCourse.code, user);
+
+      let html = `
+        <div class="space-y-8 animate-fadeIn">
+          
+          <!-- Banner -->
+          <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 rounded-3xl p-8 border border-indigo-700/50 shadow-2xl relative overflow-hidden">
+            <div class="max-w-3xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-indigo-500/30 text-indigo-300 border border-indigo-400/30 mb-3">
+                <span>Eng Sara Ustozlar & Masterclass Video Darsliklari</span>
+              </div>
+              <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">Ingliz Tili Kurslari (A1 — C2)</h1>
+              <p class="text-indigo-200 text-xs sm:text-sm leading-relaxed mb-4">
+                ${db.isOwner(user.email) 
+                  ? '👑 <strong class="text-amber-300">Komil Razmatov (Egasi):</strong> Siz uchun 160,000 UZS lik PRO PLAN teppa-tekin va barcha A1, A2, B1, B2, C1, C2 kurslar cheksiz ochiq!' 
+                  : (user.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase() 
+                      ? '📘 <strong class="text-blue-300">Fazliddin Farxodov:</strong> Sizda ODDIY tarif (100,000 UZS) faol: A1, A2, B1, B2 va <span class="underline text-emerald-300 font-bold">C1 to\'liq ochiq</span>! (C2 qulflangan).' 
+                      : 'Boshlang\'ichdan oliy darajagacha darslar.')}
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <button onclick="switchView('games')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs shadow-lg hover:opacity-90">
+                  🤖 AI Robot O'yinlariga o'tish
+                </button>
+                <button onclick="switchView('pricing')" class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 hover:bg-slate-700">
+                  💎 Tariflar ro'yxati
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level Tabs Selector -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      `;
+
+      MASTERCLASS_COURSES.forEach(c => {
+        const canAccess = db.canAccessCourse(c.code, user);
+        const isSelected = c.code === currentCourse.code;
+        
+        let badgeText = '';
+        if (c.code === 'C2') {
+          badgeText = canAccess 
+            ? '<span class="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">Ochiq (PRO)</span>'
+            : '<span class="text-[10px] font-bold text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded border border-rose-500/30">🔒 PRO da</span>';
+        } else if (c.code === 'C1') {
+          badgeText = '<span class="text-[10px] font-bold text-purple-300 bg-purple-950/60 px-2 py-0.5 rounded border border-purple-500/30">ODDIY & PRO</span>';
+        } else {
+          badgeText = '<span class="text-[10px] font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">A1-B2 Ochiq</span>';
+        }
+
+        html += `
+          <button onclick="selectCourseLevel('${c.code}')" class="text-left p-4 rounded-2xl border transition-all duration-200 relative ${
+            isSelected 
+              ? 'border-indigo-500 ring-2 ring-indigo-500/30 bg-indigo-950/40 shadow-lg' 
+              : 'border-slate-800 bg-slate-900/80 hover:border-slate-700'
+          }">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-2xl font-black ${isSelected ? 'text-indigo-400' : 'text-white'}">${c.code}</span>
+              <span class="text-base">${canAccess ? '🔓' : '🔒'}</span>
+            </div>
+            <p class="text-xs font-bold text-slate-200 truncate">${c.title.split('(')[0]}</p>
+            <div class="mt-2">${badgeText}</div>
+          </button>
+        `;
+      });
+
+      html += `
+          </div>
+
+          <!-- Main Course Viewer -->
+          <div class="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl">
+      `;
+
+      if (!isAccessible) {
+        // Locked Screen (for C2 on Oddiy plan or Free guests)
+        html += `
+          <div class="max-w-2xl mx-auto text-center py-12 px-4 space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-rose-950/60 border border-rose-800 flex items-center justify-center text-4xl shadow-xl">
+              🔒
+            </div>
+            <div class="space-y-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-900/60 text-rose-300 border border-rose-700">
+                C2 Proficiency (Faqat PRO Tarifida Ochiq)
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white">
+                ${currentCourse.title} darslariga kirish cheklangan
+              </h2>
+              <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                Sizning ODDIY tarifingizda <strong>A1, A2, B1, B2 va C1</strong> kurslari to'liq ochilgan.<br/>
+                Oliy darajadagi <strong>C2 Proficiency</strong> kursi va qolgan barcha 10 ta o'yinlarni ochish uchun <strong class="text-emerald-400">PRO PLAN (160,000 UZS)</strong> ga yangilang!
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+              <button onclick="openPaymentModal('pro')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-xl hover:opacity-90">
+                PRO PLAN ga yangilash (160,000 UZS)
+              </button>
+              <button onclick="selectCourseLevel('C1')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-700 text-slate-300 font-bold text-xs hover:bg-slate-800">
+                C1 darslariga o'tish (Ochiq)
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        // Unlocked Course Viewer with Masterclass Video
+        html += `
+          <div class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+              <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 mb-2">
+                  <span>✅ Siz uchun to'liq ochiq</span> • <span>${currentCourse.lessonsCount} ta dars</span> • <span>${currentCourse.duration}</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">
+                  ${currentCourse.code} — ${currentCourse.title}
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">
+                  Ustoz: <strong class="text-indigo-400">${currentCourse.instructor}</strong>
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="speakEnglish('${currentCourse.title.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-700 transition-all">
+                  🔊 Kurs nomini eshitish
+                </button>
+              </div>
+            </div>
+
+            <!-- Video Player & Teacher Explanations -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              
+              <!-- Video & Notes (2 Cols) -->
+              <div class="lg:col-span-2 space-y-6">
+                <!-- Video Embed Container -->
+                <div class="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-black aspect-video relative">
+                  <iframe class="w-full h-full" src="${currentCourse.videoUrl}" title="${currentCourse.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <!-- Teacher Masterclass Notes -->
+                <div class="p-6 rounded-2xl bg-indigo-950/30 border border-indigo-900/60 space-y-3">
+                  <div class="flex items-center gap-2 text-indigo-400 font-bold text-xs uppercase tracking-wider">
+                    <span>👨‍🏫 Eng Sara Ustoz Tavsiyasi & Qoidasi</span>
+                  </div>
+                  <h3 class="text-lg font-bold text-white">${currentCourse.grammarTitle}</h3>
+                  <div class="p-4 rounded-xl bg-slate-950 border border-indigo-800 font-mono text-xs text-indigo-300">
+                    ${currentCourse.grammarText}
+                  </div>
+                  <p class="text-xs text-slate-300 leading-relaxed">
+                    ${currentCourse.teacherNotes}
+                  </p>
+                </div>
+
+                <!-- Vocabulary Flashcards with Audio -->
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Darsning Asosiy Lug'ati (Ovozli talaffuz):</h4>
+                    <span class="text-[11px] text-slate-500">Karnaychani bosing</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    ${currentCourse.vocabulary.map(v => `
+                      <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-950 flex items-center justify-between hover:border-indigo-500 transition-all">
+                        <div>
+                          <div class="text-sm font-bold text-white">${v.en}</div>
+                          <div class="text-xs text-slate-400">${v.uz}</div>
+                        </div>
+                        <button onclick="speakEnglish('${v.en}')" class="p-2 rounded-lg bg-slate-800 hover:bg-indigo-600 text-indigo-300 hover:text-white transition-all shadow-sm" title="Eshitish">
+                          🔊
+                        </button>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quiz & AI Practice (1 Col) -->
+              <div class="space-y-6">
+                <div class="bg-slate-950 rounded-2xl p-6 border border-slate-800 shadow-md space-y-4">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Dars Sinov Testi</span>
+                    <span class="text-[11px] text-slate-400">+20 ball</span>
+                  </div>
+                  <h4 class="text-sm font-bold text-white">${currentCourse.quiz.q}</h4>
+                  <div class="space-y-2.5">
+                    ${currentCourse.quiz.opts.map((opt, idx) => `
+                      <button onclick="checkLessonQuizSingle(${idx}, ${currentCourse.quiz.ans}, '${currentCourse.quiz.exp.replace(/'/g, "\\'")}')" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-900 hover:border-indigo-500 text-xs font-semibold text-slate-200 transition-all flex items-center justify-between group">
+                        <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                        <span class="text-slate-500 group-hover:text-indigo-400">→</span>
+                      </button>
+                    `).join('')}
+                  </div>
+                  <div id="course-quiz-feedback" class="hidden p-3.5 rounded-xl text-xs font-medium"></div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-800/40 text-center space-y-3">
+                  <span class="text-3xl">🤖</span>
+                  <h4 class="text-sm font-bold text-white">AI Robot bilan bellashmoqchimisiz?</h4>
+                  <p class="text-xs text-slate-400 leading-relaxed">
+                    Ushbu darsdan o'rgangan bilimlaringizni interaktiv o'yinlarda AI Robotga qarshi sinab ko'ring!
+                  </p>
+                  <button onclick="switchView('games')" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs shadow-lg">
+                    🎮 10 ta AI Robot O'yiniga o'tish
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        `;
+      }
+
+      html += `
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function selectCourseLevel(code) {
+      state.selectedCourseLevel = code;
+      renderCoursesView(document.getElementById('main-content'));
+    }
+
+    function checkLessonQuizSingle(selected, correct, exp) {
+      const fb = document.getElementById('course-quiz-feedback');
+      if (!fb) return;
+      fb.classList.remove('hidden', 'bg-emerald-950/80', 'text-emerald-300', 'border-emerald-700', 'bg-rose-950/80', 'text-rose-300', 'border-rose-700');
+      if (selected === correct) {
+        fb.classList.add('bg-emerald-950/80', 'text-emerald-300', 'border', 'border-emerald-700');
+        fb.innerHTML = `🎉 <strong>Barakalla, to'g'ri javob!</strong><br/>${exp}`;
+        showToast('To\'g\'ri javob! +20 ball berildi', 'success');
+      } else {
+        fb.classList.add('bg-rose-950/80', 'text-rose-300', 'border', 'border-rose-700');
+        fb.innerHTML = `❌ <strong>Noto'g'ri javob.</strong> Qaytadan o'ylab ko'ring.<br/>Izoh: ${exp}`;
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 4. 10 TA INTERAKTIV O'YIN (AI ROBOT RAQIB BILAN BELLASHUV)
+     * =========================================================================
+     */
+    function renderGamesView(container) {
+      const user = db.getCurrentUser();
+      const activeGame = GAMES_CATALOG.find(g => g.id === state.selectedGameId) || GAMES_CATALOG[0];
+      const isAccessible = db.canAccessGame(activeGame.id, user);
+
+      let html = `
+        <div class="space-y-8 animate-fadeIn">
+          
+          <!-- Games Banner -->
+          <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 rounded-3xl p-8 border border-purple-700/50 shadow-2xl">
+            <div class="max-w-3xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-purple-500/30 text-purple-300 border border-purple-400/30 mb-3">
+                <span>🤖 AI Robot Bilan Jonli Bellashuv Tizimi</span>
+              </div>
+              <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">10 ta Ingliz Tili O'yini (AI Robot vs Foydalanuvchi)</h1>
+              <p class="text-purple-200 text-xs sm:text-sm leading-relaxed">
+                ${db.isOwner(user.email) 
+                  ? '👑 <strong class="text-amber-300">Komil Razmatov:</strong> Sizda barcha 10 ta o\'yin teppa-tekin va to\'liq ochiq!' 
+                  : (user.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase() 
+                      ? '📘 <strong class="text-blue-300">Fazliddin Farxodov:</strong> Sizda ODDIY tarifda 4 ta o\'yin to\'liq ochiq (1-4). Barcha 10 tasini o\'ynash uchun PRO talab qilinadi.' 
+                      : 'O\'yin orqali tezkor va qiziqarli o\'rganing.')}
+              </p>
+            </div>
+          </div>
+
+          <!-- 10 Games Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+      `;
+
+      GAMES_CATALOG.forEach(g => {
+        const canAccess = db.canAccessGame(g.id, user);
+        const isSelected = g.id === activeGame.id;
+
+        html += `
+          <button onclick="selectGameSingle(${g.id})" class="text-left p-4 rounded-2xl border transition-all duration-200 relative ${
+            isSelected 
+              ? 'border-purple-500 ring-2 ring-purple-500/30 bg-purple-950/40 shadow-lg' 
+              : 'border-slate-800 bg-slate-900/80 hover:border-slate-700'
+          }">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-black px-2 py-0.5 rounded bg-slate-800 text-slate-300">#${g.id}</span>
+              <span>${canAccess ? '🔓' : '🔒'}</span>
+            </div>
+            <h4 class="text-xs font-bold text-white line-clamp-1 mb-1">${g.title}</h4>
+            <div class="text-[10px] text-purple-400 font-semibold truncate">${g.robotOpponent}</div>
+            <div class="mt-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                g.unlockedInOddiy ? 'bg-blue-950 text-blue-300 border border-blue-800' : 'bg-rose-950 text-rose-300 border border-rose-800'
+              }">
+                ${g.unlockedInOddiy ? 'ODDIY: Ochiq' : 'FAQAT PRO DA'}
+              </span>
+            </div>
+          </button>
+        `;
+      });
+
+      html += `
+          </div>
+
+          <!-- Game Arena Frame -->
+          <div class="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl">
+      `;
+
+      if (!isAccessible) {
+        html += `
+          <div class="max-w-2xl mx-auto text-center py-12 px-4 space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-rose-950/60 border border-rose-800 flex items-center justify-center text-4xl shadow-xl">
+              🔒
+            </div>
+            <div class="space-y-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-900/60 text-rose-300 border border-rose-700">
+                Ushbu O'yin Faqat PRO Tarifida Ochiq
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white">#${activeGame.id} — ${activeGame.title}</h2>
+              <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                ODDIY tarifda <strong>4 ta o'yin (1-4)</strong> ochiq.<br/>
+                Ushbu o'yin va qolgan barcha 10 ta o'yinni o'ynash uchun <strong class="text-emerald-400">PRO PLAN (160,000 UZS)</strong> ga yangilang!
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+              <button onclick="openPaymentModal('pro')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs shadow-xl">
+                PRO PLAN ga yangilash (160,000 UZS)
+              </button>
+              <button onclick="selectGameSingle(1)" class="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-700 text-slate-300 font-bold text-xs hover:bg-slate-800">
+                1-o'yinga qaytish (Ochiq)
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="space-y-6">
+            
+            <!-- Live Match Board: User vs AI Robot -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 border border-indigo-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-2xl shadow-lg">
+                  👤
+                </div>
+                <div>
+                  <div class="text-xs text-indigo-300 font-bold uppercase">Siz (O'yinchi)</div>
+                  <div class="text-2xl font-black text-white" id="live-user-score">0</div>
+                </div>
+              </div>
+
+              <div class="text-center px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs">
+                <span class="text-amber-400 font-bold animate-pulse">⚔️ AI ROBOT RAQOBATI ⚔️</span>
+                <div class="text-[11px] text-slate-400 mt-0.5" id="live-match-status">Bellashuv davom etmoqda...</div>
+              </div>
+
+              <div class="flex items-center gap-3 text-right">
+                <div>
+                  <div class="text-xs text-purple-300 font-bold uppercase">${activeGame.robotOpponent}</div>
+                  <div class="text-2xl font-black text-purple-400" id="live-robot-score">0</div>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-purple-600 flex items-center justify-center text-2xl shadow-lg">
+                  🤖
+                </div>
+              </div>
+            </div>
+
+            <!-- Header Info -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <h3 class="text-xl font-bold text-white">${activeGame.title}</h3>
+                <p class="text-xs text-slate-400">Raqibingiz: <strong class="text-purple-400">${activeGame.robotOpponent}</strong></p>
+              </div>
+              <button onclick="launchSingleGame(${activeGame.id})" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold border border-slate-700">
+                🔄 Qaytadan boshlash
+              </button>
+            </div>
+
+            <!-- Dynamic Interactive Playground -->
+            <div id="single-game-arena" class="min-h-[300px] flex items-center justify-center p-4"></div>
+          </div>
+        `;
+      }
+
+      html += `
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+
+      if (isAccessible) {
+        launchSingleGame(activeGame.id);
+      }
+    }
+
+    function selectGameSingle(id) {
+      state.selectedGameId = Number(id);
+      renderGamesView(document.getElementById('main-content'));
+    }
+
+    function updateLiveMatchScore(userDelta = 0, robotDelta = 0) {
+      state.gameScore += userDelta;
+      state.robotScore += robotDelta;
+
+      const uEl = document.getElementById('live-user-score');
+      const rEl = document.getElementById('live-robot-score');
+      const stEl = document.getElementById('live-match-status');
+
+      if (uEl) uEl.textContent = state.gameScore;
+      if (rEl) rEl.textContent = state.robotScore;
+
+      if (stEl) {
+        if (state.gameScore > state.robotScore) {
+          stEl.innerHTML = `<span class="text-emerald-400 font-bold">🔥 Siz oldindasiz (+${state.gameScore - state.robotScore})!</span>`;
+        } else if (state.gameScore < state.robotScore) {
+          stEl.innerHTML = `<span class="text-rose-400 font-bold">⚠️ AI Robot oldinda (+${state.robotScore - state.gameScore})!</span>`;
+        } else {
+          stEl.innerHTML = `<span class="text-amber-400 font-bold">Durang natija!</span>`;
+        }
+      }
+    }
+
+    function launchSingleGame(id) {
+      const arena = document.getElementById('single-game-arena');
+      if (!arena) return;
+
+      if (state.robotTimer) clearInterval(state.robotTimer);
+      state.gameScore = 0;
+      state.robotScore = 0;
+      updateLiveMatchScore(0, 0);
+
+      switch (id) {
+        case 1: runGame1_WordMatch(arena); break;
+        case 2: runGame2_GrammarBlitz(arena); break;
+        case 3: runGame3_SpeedSpelling(arena); break;
+        case 4: runGame4_SentenceBuilder(arena); break;
+        case 5: runGame5_IrregularVerbs(arena); break;
+        case 6: runGame6_Pronunciation(arena); break;
+        case 7: runGame7_Idioms(arena); break;
+        case 8: runGame8_Listening(arena); break;
+        case 9: runGame9_Crossword(arena); break;
+        case 10: runGame10_IELTS(arena); break;
+      }
+    }
+
+    // GAME 1: Word Match + AI Robot Match Moves
+    function runGame1_WordMatch(arena) {
+      const pairs = [
+        { en: 'Courage', uz: 'Jasorat' },
+        { en: 'Achieve', uz: 'Erishmoq' },
+        { en: 'Knowledge', uz: 'Bilim' },
+        { en: 'Discover', uz: 'Kashf etmoq' },
+        { en: 'Patience', uz: 'Sabr-toqat' },
+        { en: 'Opportunity', uz: 'Imkoniyat' }
+      ];
+
+      const cards = [];
+      pairs.forEach(p => {
+        cards.push({ text: p.en, pair: p.en, type: 'en' });
+        cards.push({ text: p.uz, pair: p.en, type: 'uz' });
+      });
+      cards.sort(() => Math.random() - 0.5);
+
+      arena.innerHTML = `
+        <div class="w-full max-w-xl space-y-4">
+          <div class="text-xs text-center text-slate-400">Inglizcha so'zni va tarjimasini juftlang! AI Robot ham parallel qidirmoqda:</div>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-3" id="match-card-grid"></div>
+        </div>
+      `;
+
+      let selected = null;
+      let matchedCount = 0;
+      const grid = document.getElementById('match-card-grid');
+
+      cards.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'p-3.5 rounded-xl border border-slate-800 bg-slate-950 text-xs sm:text-sm font-bold text-slate-200 hover:border-indigo-400 transition-all text-center';
+        btn.textContent = c.text;
+        btn.dataset.pair = c.pair;
+
+        btn.onclick = () => {
+          if (btn.classList.contains('bg-emerald-950') || btn.disabled) return;
+          if (!selected) {
+            selected = btn;
+            btn.classList.add('ring-2', 'ring-indigo-500', 'bg-indigo-950');
+            if (c.type === 'en') speakEnglish(c.text);
+          } else {
+            if (selected === btn) {
+              selected.classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-950');
+              selected = null;
+              return;
+            }
+            if (selected.dataset.pair === btn.dataset.pair) {
+              selected.classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-950');
+              selected.classList.add('bg-emerald-950', 'text-emerald-300', 'border-emerald-700');
+              btn.classList.add('bg-emerald-950', 'text-emerald-300', 'border-emerald-700');
+              selected.disabled = true;
+              btn.disabled = true;
+              selected = null;
+              matchedCount++;
+              updateLiveMatchScore(25, 0);
+              showToast('Siz to\'g\'ri juftlik topdingiz! +25 ball', 'success');
+
+              if (matchedCount >= pairs.length) {
+                if (state.robotTimer) clearInterval(state.robotTimer);
+                showToast('🎉 TABRIKLAYMIZ! Barcha so\'zlarni topib AI Robotni mag\'lub etdingiz!', 'success');
+              }
+            } else {
+              selected.classList.add('bg-rose-950', 'text-rose-300');
+              btn.classList.add('bg-rose-950', 'text-rose-300');
+              setTimeout(() => {
+                selected.classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-950', 'bg-rose-950', 'text-rose-300');
+                btn.classList.remove('bg-rose-950', 'text-rose-300');
+                selected = null;
+              }, 400);
+            }
+          }
+        };
+
+        grid.appendChild(btn);
+      });
+
+      // AI Robot Opponent Timer: Bot scores every 7 seconds
+      state.robotTimer = setInterval(() => {
+        if (matchedCount < pairs.length) {
+          updateLiveMatchScore(0, 15);
+          showToast('🤖 AI Robot 1 ta algoritmik tahlil o\'tkazdi! +15 ball', 'info');
+        }
+      }, 7000);
+    }
+
+    // GAME 2: Grammar Blitz
+    function runGame2_GrammarBlitz(arena) {
+      const questions = [
+        { q: 'She ___ to the academy every morning before classes.', opts: ['go', 'goes', 'going', 'went'], ans: 1 },
+        { q: 'They haven’t seen each other ___ 2021.', opts: ['for', 'since', 'during', 'while'], ans: 1 },
+        { q: 'If I ___ a scholarship, I would study in Cambridge.', opts: ['win', 'won', 'will win', 'would win'], ans: 1 },
+        { q: 'The novel was ___ by a renowned British author.', opts: ['write', 'writing', 'written', 'wrote'], ans: 2 }
+      ];
+
+      let qIdx = 0;
+      function render() {
+        if (qIdx >= questions.length) {
+          if (state.robotTimer) clearInterval(state.robotTimer);
+          arena.innerHTML = `
+            <div class="text-center py-8 space-y-3">
+              <div class="text-4xl">🏆</div>
+              <h3 class="text-xl font-bold text-white">Grammar Blitz Yakunlandi!</h3>
+              <p class="text-xs text-slate-400">Siz: <strong>${state.gameScore} ball</strong> | AI Robot: <strong>${state.robotScore} ball</strong></p>
+              <button onclick="runGame2_GrammarBlitz(document.getElementById('single-game-arena'))" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-md">
+                Qaytadan Bellashish
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        const item = questions[qIdx];
+        arena.innerHTML = `
+          <div class="w-full max-w-lg space-y-4">
+            <div class="flex justify-between text-xs text-slate-400">
+              <span>Savol ${qIdx + 1} / ${questions.length}</span>
+              <span class="text-indigo-400 font-bold">Grammar Blitz vs AI Robot</span>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm font-bold text-white">
+              ${item.q}
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${item.opts.map((opt, i) => `
+                <button onclick="answerBlitzMatch(${i})" class="p-3 rounded-xl border border-slate-800 bg-slate-900 hover:border-indigo-500 text-xs font-semibold text-slate-200 text-left transition-all">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      window.answerBlitzMatch = (i) => {
+        if (i === questions[qIdx].ans) {
+          updateLiveMatchScore(30, 0);
+          showToast('To\'g\'ri javob! +30 ball', 'success');
+        } else {
+          showToast('Noto\'g\'ri javob!', 'error');
+        }
+        qIdx++;
+        render();
+      };
+
+      // AI Robot scores occasionally
+      state.robotTimer = setInterval(() => {
+        updateLiveMatchScore(0, 20);
+        showToast('⚡ AI Robot grammatik testni to\'g\'ri yechdi! +20 ball', 'warning');
+      }, 6500);
+
+      render();
+    }
+
+    // GAME 3: Speed Spelling
+    function runGame3_SpeedSpelling(arena) {
+      const words = ['BRILLIANT', 'KNOWLEDGE', 'CHALLENGE', 'EDUCATION'];
+      let wIdx = 0, target = words[wIdx], letters = target.split('').sort(() => Math.random() - 0.5), userLetters = [];
+
+      function render() {
+        arena.innerHTML = `
+          <div class="w-full max-w-md text-center space-y-5">
+            <div class="text-xs text-slate-400">Harflarni to'g'ri ketma-ketlikda yig'ing (AI Spello-Bot ham so'zni tuzmoqda!):</div>
+            <div class="min-h-[50px] p-3 rounded-xl border-2 border-dashed border-indigo-700 flex items-center justify-center gap-2">
+              ${userLetters.length === 0 ? '<span class="text-xs text-slate-500">Harflarni tanlang...</span>' : ''}
+              ${userLetters.map((l, i) => `
+                <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-sm cursor-pointer" onclick="removeSpellLetter(${i})">${l}</span>
+              `).join('')}
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+              ${letters.map((l, i) => `
+                <button onclick="pickSpellLetter(${i})" class="w-9 h-9 rounded-xl border border-slate-700 bg-slate-800 text-sm font-bold text-white hover:bg-indigo-600 transition-all">${l}</button>
+              `).join('')}
+            </div>
+            <div class="flex justify-center gap-3">
+              <button onclick="clearSpellLetters()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">Tozalash</button>
+              <button onclick="speakEnglish('${target}')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-bold text-indigo-400">🔊 So'zni eshitish</button>
+            </div>
+          </div>
+        `;
+      }
+
+      window.pickSpellLetter = (idx) => {
+        userLetters.push(letters[idx]);
+        letters.splice(idx, 1);
+        if (userLetters.join('') === target) {
+          updateLiveMatchScore(35, 0);
+          showToast(`Ajoyib! "${target}" so'zi to'g'ri yozildi! +35 ball`, 'success');
+          wIdx = (wIdx + 1) % words.length;
+          target = words[wIdx];
+          letters = target.split('').sort(() => Math.random() - 0.5);
+          userLetters = [];
+        }
+        render();
+      };
+
+      window.removeSpellLetter = (idx) => {
+        letters.push(userLetters[idx]);
+        userLetters.splice(idx, 1);
+        render();
+      };
+
+      window.clearSpellLetters = () => {
+        letters = target.split('').sort(() => Math.random() - 0.5);
+        userLetters = [];
+        render();
+      };
+
+      state.robotTimer = setInterval(() => {
+        updateLiveMatchScore(0, 15);
+        showToast('🔤 Spello-Bot harf ketma-ketligini yig\'di! +15 ball', 'info');
+      }, 7500);
+
+      render();
+    }
+
+    // GAME 4: Sentence Builder
+    function runGame4_SentenceBuilder(arena) {
+      const sents = [
+        { full: 'English is the key to global success', words: ['English', 'is', 'the', 'key', 'to', 'global', 'success'] },
+        { full: 'Practice every single day to speak fluently', words: ['Practice', 'every', 'single', 'day', 'to', 'speak', 'fluently'] }
+      ];
+      let sIdx = 0, current = sents[sIdx], pool = [...current.words].sort(() => Math.random() - 0.5), userArr = [];
+
+      function render() {
+        arena.innerHTML = `
+          <div class="w-full max-w-xl text-center space-y-4">
+            <div class="text-xs text-slate-400">So'zlarni to'g'ri grammatik tartibda terib gap hosil qiling:</div>
+            <div class="min-h-[60px] p-4 rounded-2xl border-2 border-dashed border-teal-700 flex flex-wrap items-center justify-center gap-2 bg-teal-950/20">
+              ${userArr.length === 0 ? '<span class="text-xs text-slate-500">So\'zlarni tanlang...</span>' : ''}
+              ${userArr.map((w, i) => `
+                <span class="px-3 py-1.5 rounded-lg bg-teal-600 text-white font-bold text-xs shadow-sm cursor-pointer" onclick="removeSentWord(${i})">${w} ✕</span>
+              `).join('')}
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+              ${pool.map((w, i) => `
+                <button onclick="pickSentWord(${i})" class="px-3.5 py-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-bold text-white hover:border-teal-400 transition-all">${w}</button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      window.pickSentWord = (idx) => {
+        userArr.push(pool[idx]);
+        pool.splice(idx, 1);
+        if (userArr.join(' ') === current.full) {
+          updateLiveMatchScore(40, 0);
+          showToast('Gap mukammal tuzildi! +40 ball', 'success');
+          sIdx = (sIdx + 1) % sents.length;
+          current = sents[sIdx];
+          pool = [...current.words].sort(() => Math.random() - 0.5);
+          userArr = [];
+        }
+        render();
+      };
+
+      window.removeSentWord = (idx) => {
+        pool.push(userArr[idx]);
+        userArr.splice(idx, 1);
+        render();
+      };
+
+      state.robotTimer = setInterval(() => {
+        updateLiveMatchScore(0, 20);
+        showToast('🧠 Syntax-AI to\'g\'ri gap tuzdi! +20 ball', 'info');
+      }, 8000);
+
+      render();
+    }
+
+    // GAME 5: Irregular Verbs (PRO)
+    function runGame5_IrregularVerbs(arena) {
+      const verbs = [
+        { v1: 'Speak', v2: 'spoke', v3: 'spoken' },
+        { v1: 'Write', v2: 'wrote', v3: 'written' },
+        { v1: 'Begin', v2: 'began', v3: 'begun' }
+      ];
+      let vIdx = 0;
+      function render() {
+        const v = verbs[vIdx];
+        arena.innerHTML = `
+          <div class="w-full max-w-md space-y-4">
+            <div class="text-center">
+              <span class="text-xs font-bold text-amber-400 uppercase">PRO Mastery vs AI Robot</span>
+              <h3 class="text-lg font-bold text-white mt-1">Fe'l: "${v.v1}"</h3>
+              <p class="text-xs text-slate-400">V2 va V3 shaklini yozing:</p>
+            </div>
+            <div class="space-y-3">
+              <input type="text" id="v2-in" placeholder="V2 (Past Simple)..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950 text-xs font-semibold text-white">
+              <input type="text" id="v3-in" placeholder="V3 (Past Participle)..." class="w-full p-3 rounded-xl border border-slate-700 bg-slate-950 text-xs font-semibold text-white">
+              <button onclick="checkVerbMatch()" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md">Tekshirish</button>
+            </div>
+          </div>
+        `;
+      }
+      window.checkVerbMatch = () => {
+        const v = verbs[vIdx];
+        const a = (document.getElementById('v2-in').value || '').trim().toLowerCase();
+        const b = (document.getElementById('v3-in').value || '').trim().toLowerCase();
+        if (a === v.v2.toLowerCase() && b === v.v3.toLowerCase()) {
+          updateLiveMatchScore(50, 0);
+          showToast(`To'g'ri! ${v.v1} - ${v.v2} - ${v.v3}! +50 ball`, 'success');
+          vIdx = (vIdx + 1) % verbs.length;
+          render();
+        } else {
+          showToast(`Noto'g'ri! To'g'ri javob: ${v.v2} / ${v.v3}`, 'error');
+        }
+      };
+      render();
+    }
+
+    // GAME 6: Pronunciation Master (PRO)
+    function runGame6_Pronunciation(arena) {
+      const phrase = 'Perseverance is essential for native fluency';
+      arena.innerHTML = `
+        <div class="w-full max-w-md text-center space-y-4">
+          <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">PRO Speech Studio</span>
+          <h3 class="text-base font-bold text-white">"${phrase}"</h3>
+          <p class="text-xs text-slate-400">Audioni eshiting va mikrofonga talaffuz qiling</p>
+          <div class="flex justify-center gap-3">
+            <button onclick="speakEnglish('${phrase}')" class="px-5 py-2.5 rounded-xl bg-purple-950 text-purple-300 font-bold text-xs border border-purple-800">🔊 Eshiting</button>
+            <button onclick="evalMatchPronounce()" class="px-5 py-2.5 rounded-xl bg-purple-600 text-white font-bold text-xs shadow-md">🎙️ Sinash</button>
+          </div>
+          <div id="p-res-match" class="hidden p-3 rounded-xl text-xs bg-emerald-950 text-emerald-300 border border-emerald-700">
+            🎉 Ajoyib talaffuz! 98% aniqlik baholandi! +50 ball.
+          </div>
+        </div>
+      `;
+      window.evalMatchPronounce = () => {
+        document.getElementById('p-res-match').classList.remove('hidden');
+        updateLiveMatchScore(50, 10);
+        showToast('Talaffuz: 98% aniqlik! +50 ball', 'success');
+      };
+    }
+
+    // GAME 7: Idioms (PRO)
+    function runGame7_Idioms(arena) {
+      const item = { idiom: 'Break the ice', opts: ['Muzni sindirmoq', 'Begonalar bilan suhbatni erkin boshlash', 'Sovuq havoda qolmoq'], ans: 1 };
+      arena.innerHTML = `
+        <div class="w-full max-w-md space-y-4 text-center">
+          <span class="text-xs font-bold text-violet-400 uppercase">PRO Idiomalar vs AI Robot</span>
+          <h3 class="text-xl font-black text-white">"${item.idiom}"</h3>
+          <p class="text-xs text-slate-400">Ushbu iboraning ma'nosi nima?</p>
+          <div class="space-y-2 text-left">
+            ${item.opts.map((opt, i) => `
+              <button onclick="checkIdiomMatch(${i})" class="w-full p-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-200 hover:border-violet-500 transition-all">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      window.checkIdiomMatch = (i) => {
+        if (i === item.ans) {
+          updateLiveMatchScore(40, 0);
+          showToast('To\'g\'ri! Idioma ma\'nosi topildi! +40 ball', 'success');
+        } else {
+          showToast('Noto\'g\'ri javob!', 'error');
+        }
+      };
+    }
+
+    // GAME 8: Listening (PRO)
+    function runGame8_Listening(arena) {
+      const item = { sentence: 'The flight has been rescheduled for tomorrow morning', opts: ['The flight has been cancelled today', 'The flight has been rescheduled for tomorrow morning', 'The train is departing right now'], ans: 1 };
+      arena.innerHTML = `
+        <div class="w-full max-w-md text-center space-y-4">
+          <span class="text-xs font-bold text-rose-400 uppercase">PRO Listening</span>
+          <h3 class="text-sm font-bold text-white">Audioni tinglang va to'g'ri gapni tanlang:</h3>
+          <button onclick="speakEnglish('${item.sentence}')" class="px-5 py-2.5 rounded-xl bg-rose-600 text-white font-bold text-xs shadow-md mx-auto">
+            🔊 Audioni tinglash
+          </button>
+          <div class="space-y-2 text-left pt-2">
+            ${item.opts.map((opt, i) => `
+              <button onclick="checkAudioMatch(${i})" class="w-full p-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-200 hover:border-rose-500 transition-all">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      window.checkAudioMatch = (i) => {
+        if (i === item.ans) {
+          updateLiveMatchScore(45, 0);
+          showToast('Audio aniq tushunildi! +45 ball', 'success');
+        } else {
+          showToast('Xato variant!', 'error');
+        }
+      };
+    }
+
+    // GAME 9: Mini Crossword (PRO)
+    function runGame9_Crossword(arena) {
+      arena.innerHTML = `
+        <div class="w-full max-w-md text-center space-y-4">
+          <span class="text-xs font-bold text-orange-400 uppercase">PRO Krossvord vs Cross-Bot</span>
+          <h3 class="text-sm font-bold text-white">Mini Lug'at Krossvordi</h3>
+          <div class="p-3 rounded-xl bg-slate-950 text-left text-xs space-y-1 border border-slate-800">
+            <div>1. Gorizontal (4 harf): Kitob -> <strong>B _ _ K</strong></div>
+            <div>2. Vertikal (4 harf): Vaqt -> <strong>T _ _ E</strong></div>
+          </div>
+          <div class="flex justify-center gap-2">
+            <input type="text" id="c1-in" placeholder="B..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-xs font-bold text-center uppercase w-28 text-white">
+            <input type="text" id="c2-in" placeholder="T..." class="p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-xs font-bold text-center uppercase w-28 text-white">
+          </div>
+          <button onclick="checkCrosswordMatch()" class="px-5 py-2.5 rounded-xl bg-orange-600 text-white font-bold text-xs shadow-md">Tekshirish</button>
+        </div>
+      `;
+      window.checkCrosswordMatch = () => {
+        const a = (document.getElementById('c1-in').value || '').trim().toUpperCase();
+        const b = (document.getElementById('c2-in').value || '').trim().toUpperCase();
+        if (a === 'BOOK' && b === 'TIME') {
+          updateLiveMatchScore(60, 0);
+          showToast('Krossvord yechildi! (BOOK & TIME) +60 ball', 'success');
+        } else {
+          showToast('Maslahat: BOOK va TIME', 'warning');
+        }
+      };
+    }
+
+    // GAME 10: IELTS Speaking Battle (PRO)
+    function runGame10_IELTS(arena) {
+      arena.innerHTML = `
+        <div class="w-full max-w-md space-y-4">
+          <span class="text-xs font-bold text-red-400 uppercase">IELTS Part 2 Cue Card (PRO)</span>
+          <div class="p-4 rounded-xl bg-red-950/30 border border-red-800 text-xs space-y-2">
+            <h4 class="font-extrabold text-white">Describe an accomplishment you are proud of</h4>
+            <ul class="list-disc pl-4 text-slate-300">
+              <li>What it was</li>
+              <li>When you did it</li>
+              <li>Why you are proud of it</li>
+            </ul>
+          </div>
+          <button onclick="finishIELTSMatch()" class="w-full py-3 rounded-xl bg-red-600 text-white font-bold text-xs shadow-md">
+            🎙️ Nutqni AI Examiner Baholash (Band Score 8.5)
+          </button>
+        </div>
+      `;
+      window.finishIELTSMatch = () => {
+        updateLiveMatchScore(80, 0);
+        showToast('IELTS Speaking yakunlandi: Band Score 8.5! +80 ball', 'success');
+      };
+    }
+
+    /**
+     * =========================================================================
+     * 5. PRICING & SUBSCRIPTIONS SCREEN (100k & 160k)
+     * =========================================================================
+     */
+    function renderPricingView(container) {
+      const user = db.getCurrentUser();
+      const oddiy = DEFAULT_PLANS.oddiy;
+      const pro = DEFAULT_PLANS.pro;
+
+      container.innerHTML = `
+        <div class="space-y-12 animate-fadeIn max-w-5xl mx-auto py-4">
+          
+          <div class="text-center space-y-4 max-w-2xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+              <span>Rasmiy Tariflar Rejasi</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">O'zingizga Mos Tarifni Tanlang</h1>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              ODDIY: 100,000 UZS (A1-C1 ochiq, 4 o'yin) • PRO PLAN: 160,000 UZS (A1-C2 barcha kurslar, 10 ta o'yin).
+            </p>
+          </div>
+
+          <!-- Owner Alert -->
+          ${db.isOwner(user.email) ? `
+            <div class="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-purple-500/10 border-2 border-amber-500/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="text-3xl">👑</span>
+                <div>
+                  <h4 class="text-sm font-extrabold text-white">Platforma Egasi: Komil Razmatov (komilrazmatov@gmail.com)</h4>
+                  <p class="text-xs text-slate-300">Siz uchun 160,000 UZS lik PRO PLAN teppa-tekin va cheksiz ochiq. Barcha darslar va 10 ta o'yin sizga doimiy ochiq!</p>
+                </div>
+              </div>
+              <button onclick="switchView('admin')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 text-white font-bold text-xs shadow-md">
+                Admin Panelga o'tish →
+              </button>
+            </div>
+          ` : ''}
+
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            
+            <!-- CARD 1: ODDIY (100,000 UZS) -->
+            <div class="rounded-3xl p-8 bg-slate-900 border-2 ${
+              user.plan === 'oddiy' ? 'border-blue-500 ring-4 ring-blue-500/20' : 'border-slate-800'
+            } shadow-xl flex flex-col justify-between relative hover:border-slate-700 transition-all">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-950 text-blue-300 border border-blue-800">
+                    ${oddiy.badge}
+                  </span>
+                  ${user.plan === 'oddiy' ? '<span class="text-xs font-bold text-blue-400 bg-blue-950/80 px-2.5 py-1 rounded-full border border-blue-800">Sizning amaldagi tarifingiz</span>' : ''}
+                </div>
+
+                <h3 class="text-2xl font-black text-white mb-1">${oddiy.name}</h3>
+                <p class="text-xs text-slate-400 mb-6">${oddiy.description}</p>
+
+                <div class="flex items-baseline gap-1 mb-8">
+                  <span class="text-4xl font-black text-white tracking-tight">${oddiy.priceFormatted}</span>
+                  <span class="text-sm font-semibold text-slate-400">${oddiy.period}</span>
+                </div>
+
+                <ul class="space-y-3.5 text-xs sm:text-sm text-slate-300 mb-8">
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-blue-900/60 text-blue-300 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span><strong>A1, A2, B1, B2</strong> kurslari to'liq</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-blue-900/60 text-blue-300 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span class="font-bold text-blue-300 underline">C1 Advanced kursi ochilgan</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-blue-900/60 text-blue-300 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span><strong>4 ta interaktiv o'yin</strong> to'liq ochiq</span>
+                  </li>
+                  <li class="flex items-center gap-3 text-slate-500">
+                    <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-500 flex items-center justify-center font-bold text-xs">✕</span>
+                    <span class="line-through">C2 Proficiency kursi (Qulflangan)</span>
+                  </li>
+                  <li class="flex items-center gap-3 text-slate-500">
+                    <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-500 flex items-center justify-center font-bold text-xs">✕</span>
+                    <span class="line-through">Qolgan 6 ta o'yin (Qulflangan)</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openPaymentModal('oddiy')" class="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all">
+                ODDIY Tarifga Obuna Bo'lish (100,000 UZS)
+              </button>
+            </div>
+
+            <!-- CARD 2: PRO PLAN (160,000 UZS) -->
+            <div class="rounded-3xl p-8 bg-gradient-to-b from-slate-900 to-indigo-950 text-white border-2 ${
+              user.plan === 'pro' ? 'border-emerald-400 ring-4 ring-emerald-500/20' : 'border-indigo-600/50'
+            } shadow-2xl flex flex-col justify-between relative hover:shadow-indigo-500/20 transition-all">
+              
+              <div class="absolute -top-3.5 right-6 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-md">
+                Eng Ommabop & Cheksiz
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
+                    ${pro.badge}
+                  </span>
+                  ${user.plan === 'pro' ? '<span class="text-xs font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/40">Sizning amaldagi tarifingiz</span>' : ''}
+                </div>
+
+                <h3 class="text-2xl font-black text-white mb-1">${pro.name}</h3>
+                <p class="text-xs text-indigo-200 mb-6">${pro.description}</p>
+
+                <div class="flex items-baseline gap-1 mb-8">
+                  <span class="text-4xl font-black text-white tracking-tight">${pro.priceFormatted}</span>
+                  <span class="text-sm font-semibold text-indigo-300">${pro.period}</span>
+                </div>
+
+                <ul class="space-y-3.5 text-xs sm:text-sm text-indigo-100 mb-8">
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span><strong>Barcha A1, A2, B1, B2, C1, C2</strong> kurslari to'liq ochiq</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span class="font-bold text-emerald-300">C2 Proficiency oliy daraja ochiq</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span class="font-bold text-emerald-300">Barcha 10 ta o'yin to'liq ochilgan</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span>Barcha premium imkoniyatlar ochilgan</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">✓</span>
+                    <span>AI Speaking Tutor & Suhbat simulyatori</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openPaymentModal('pro')" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:opacity-90 text-slate-950 font-black text-xs shadow-xl transition-all">
+                PRO PLAN ga Obuna Bo'lish (160,000 UZS)
+              </button>
+            </div>
+
+          </div>
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * 6. PAYMENT MODAL
+     * =========================================================================
+     */
+    function openPaymentModal(planId = 'oddiy') {
+      const plan = DEFAULT_PLANS[planId] || DEFAULT_PLANS.oddiy;
+      const user = db.getCurrentUser();
+      const modal = document.getElementById('payment-modal');
+      if (!modal) return;
+
+      modal.innerHTML = `
+        <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto" onclick="closePaymentModal(event)">
+          <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-slate-800 shadow-2xl space-y-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closePaymentModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white text-lg font-bold">✕</button>
+
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${planId === 'pro' ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-blue-950 text-blue-300 border border-blue-800'}">
+                <span>To'lov Yo'riqnomasi</span> • <span>${plan.name}</span>
+              </div>
+              <h2 class="text-2xl font-black text-white mt-1">${plan.name} Obunasi</h2>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-900 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-slate-400">To'lov summasi:</span>
+                <div class="text-2xl font-black text-indigo-400">${plan.priceFormatted}</div>
+              </div>
+              <div class="text-right text-xs text-slate-400">                                                                                                       
+                ${planId === 'pro' ? 'Barcha kurslar & 10 ta o\'yin' : 'A1-C1 kurslar & 4 ta o\'yin'}
+              </div>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-300">
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Karta Raqami:</div>
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-base font-bold text-white select-all">9860 3501 2490 7712</span>
+                  <button onclick="copyCardNum('9860350124907712')" class="px-2.5 py-1 rounded-lg bg-indigo-900/60 text-indigo-300 font-bold text-[11px]">
+                    Nusxa 📋
+                  </button>
+                </div>
+                <div class="text-[11px] text-slate-400">Qabul qiluvchi: <strong>Komil Razmatov</strong> (Humo / Uzcard)</div>
+              </div>
+            </div>
+
+            <form onsubmit="submitQuickPay(event, '${plan.id}')" class="space-y-3 pt-1">
+              <div>
+                <label class="text-xs font-bold text-slate-300">E-mail manzilingiz:</label>
+                <input type="text" id="pay-email" value="${user.email}" required class="w-full mt-1 p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-xs font-semibold text-white">
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs font-bold text-slate-300">To'lov usuli:</label>
+                  <select id="pay-method" class="w-full mt-1 p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-xs font-semibold text-white">
+                    <option value="Click">Click</option>
+                    <option value="Payme">Payme</option>
+                    <option value="Uzum Bank">Uzum Bank</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-xs font-bold text-slate-300">Karta oxirgi 4 raqami:</label>
+                  <input type="text" id="pay-last4" placeholder="4892" maxlength="4" required class="w-full mt-1 p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-xs font-semibold text-white">
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl bg-amber-950/40 border border-amber-900 text-[11px] text-amber-300">
+                <strong>⚠️ Muhim:</strong> Faqat platforma egasi <strong>Komil Razmatov</strong> tasdiqlaganidan keyin obunangiz faollashadi.
+              </div>
+
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-xl">
+                To'lovni Tasdiqlash Uchun Yuborish 🚀
+              </button>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+
+    function closePaymentModal() {
+      document.getElementById('payment-modal').innerHTML = '';
+    }
+
+    function copyCardNum(num) {
+      navigator.clipboard.writeText(num).then(() => showToast('Karta raqami nusxalandi: ' + num, 'info'));
+    }
+
+    function submitQuickPay(e, planId) {
+      e.preventDefault();
+      closePaymentModal();
+      showToast('To\'lovingiz yuborildi! Admin Komil Razmatov tasdiqlashi kutilmoqda.', 'warning');
+      switchView('courses');
+    }
+
+    /**
+     * =========================================================================
+     * 7. ADMIN DASHBOARD (KOMIL RAZMATOV)
+     * =========================================================================
+     */
+    function renderAdminView(container) {
+      const user = db.getCurrentUser();
+      if (!db.isOwner(user.email)) {
+        container.innerHTML = `
+          <div class="max-w-md mx-auto text-center py-16 space-y-4">
+            <div class="text-4xl">🚫</div>
+            <h2 class="text-2xl font-black text-white">Kirish Cheklangan</h2>
+            <p class="text-xs text-slate-400">Ushbu boshqaruv paneli faqat egasi <strong>komilrazmatov@gmail.com</strong> uchun ochiq.</p>
+            <button onclick="db.switchUser('${OWNER_EMAIL}')" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-md">
+              Komil Razmatov sifatida kirish
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="space-y-8 animate-fadeIn">
+          
+          <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-8 border border-indigo-700/50 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 mb-2">
+                <span>👑 Bosh Boshqaruv Markazi</span>
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-black text-white">Admin Boshqaruv Paneli — Komil Razmatov</h1>
+              <p class="text-indigo-200 text-xs mt-1">komilrazmatov@gmail.com • Barcha to'lovlarni tasdiqlash va obuna mantiqi</p>
+            </div>
+            <button onclick="localStorage.clear(); location.reload();" class="px-4 py-2 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 text-xs font-bold border border-rose-500/40">
+              Ma'lumotlarni tozalash
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800">
+              <span class="text-xs text-slate-400">Foydalanuvchilar</span>
+              <div class="text-2xl font-black text-white mt-1">3 ta</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-blue-950/40 border border-blue-800">
+              <span class="text-xs text-blue-300 font-bold">Faol ODDIY (100k)</span>
+              <div class="text-2xl font-black text-blue-400 mt-1">1 ta (Fazliddin)</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-emerald-950/40 border border-emerald-800">
+              <span class="text-xs text-emerald-300 font-bold">Faol PRO (160k)</span>
+              <div class="text-2xl font-black text-emerald-400 mt-1">1 ta (Komil - Bepul)</div>
+            </div>
+            <div class="p-5 rounded-2xl bg-indigo-950/40 border border-indigo-800">
+              <span class="text-xs text-indigo-300 font-bold">Jami Tushum</span>
+              <div class="text-2xl font-black text-indigo-400 mt-1">100,000 UZS</div>
+            </div>
+          </div>
+
+          <!-- User Management Table -->
+          <div class="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-4">
+            <h2 class="text-xl font-black text-white">👥 Foydalanuvchilar va Maxsus Ruxsatlar</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950 text-slate-400 uppercase font-bold">
+                  <tr>
+                    <th class="p-3">Foydalanuvchi</th>
+                    <th class="p-3">Tarif</th>
+                    <th class="p-3">Kurslar Ruxsati</th>
+                    <th class="p-3">O'yinlar Ruxsati</th>
+                    <th class="p-3 text-right">Holat</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                  <tr>
+                    <td class="p-3 font-bold text-white">Komil Razmatov 👑<br/><span class="text-slate-400 font-normal">komilrazmatov@gmail.com</span></td>
+                    <td class="p-3 font-bold text-amber-400">Platforma Egasi (160k PRO - Bepul)</td>
+                    <td class="p-3 text-emerald-400 font-bold">A1, A2, B1, B2, C1, C2 (Hammasi Ochiq)</td>
+                    <td class="p-3 text-emerald-400 font-bold">Barcha 10 ta o'yin ochiq</td>
+                    <td class="p-3 text-right text-emerald-400 font-bold">● Cheksiz Bepul</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-white">Fazliddin Farxodov 📘<br/><span class="text-slate-400 font-normal">farxodovfazliddin19@gmail.com</span></td>
+                    <td class="p-3 font-bold text-blue-400">ODDIY (100,000 UZS)</td>
+                    <td class="p-3 text-blue-300 font-bold">A1-C1 ochiq (C2 qulflangan)</td>
+                    <td class="p-3 text-blue-300 font-bold">4 ta o'yin ochiq (1-4)</td>
+                    <td class="p-3 text-right text-blue-400 font-bold">● Faol (100k)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * 8. PROFILE & ACCOUNT SWITCHER
+     * =========================================================================
+     */
+    function renderProfileView(container) {
+      const u = db.getCurrentUser();
+      const isOwn = db.isOwner(u.email);
+
+      container.innerHTML = `
+        <div class="max-w-2xl mx-auto space-y-8 animate-fadeIn py-6">
+          <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-xl space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-2xl bg-indigo-600 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg">
+                ${u.name ? u.name[0].toUpperCase() : 'U'}
+              </div>
+              <div>
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                  ${u.name} ${isOwn ? '👑' : ''}
+                </h2>
+                <p class="text-xs text-slate-400">${u.email}</p>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Joriy Obuna:</div>
+              <div class="text-lg font-black text-indigo-400">${u.planName}</div>
+              <p class="text-xs text-slate-400">
+                ${isOwn 
+                  ? 'Platforma egasi sifatida sizda barcha A1-C2 kurslar va 10 ta o\'yin teppa-tekin va cheksiz ochiq.' 
+                  : (u.email.toLowerCase() === FAZLIDDIN_EMAIL.toLowerCase() 
+                      ? 'Fazliddin Farxodov uchun 100,000 UZS lik ODDIY tarif faol (A1-C1 ochiq, 4 ta o\'yin ochiq).' 
+                      : 'Pullik tarif tanlanmagan.')}
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 space-y-3">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Tezkor Hisob Almashtirgich:</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button onclick="db.switchUser('${OWNER_EMAIL}')" class="p-3 rounded-xl border border-amber-500/40 bg-amber-950/20 text-left text-xs font-bold text-amber-300 hover:bg-amber-900/30 transition-all">
+                  👑 Komil Razmatov (Egasi)
+                  <div class="text-[10px] font-normal text-amber-400">160k PRO Bepul Cheksiz Ochiq</div>
+                </button>
+                <button onclick="db.switchUser('${FAZLIDDIN_EMAIL}')" class="p-3 rounded-xl border border-blue-500/40 bg-blue-950/20 text-left text-xs font-bold text-blue-300 hover:bg-blue-900/30 transition-all">
+                  📘 Fazliddin Farxodov
+                  <div class="text-[10px] font-normal text-blue-400">ODDIY 100k (A1-C1 ochiq, 4 o'yin)</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // App Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      switchView('courses');
+    });
+  </script>
+</body>
+</html>
